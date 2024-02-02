@@ -1,0 +1,7 @@
+package com.pabloinsdrums.apigestion.repository;
+
+import com.pabloinsdrums.apigestion.model.entity.Category;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface CategoryRepository extends JpaRepository<Category, Long> {
+}

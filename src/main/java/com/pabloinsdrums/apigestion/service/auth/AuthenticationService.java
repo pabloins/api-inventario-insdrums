@@ -1,10 +1,16 @@
 package com.pabloinsdrums.apigestion.service.auth;
 
-import com.pabloinsdrums.apigestion.dto.RegisteredUser;
-import com.pabloinsdrums.apigestion.dto.SaveUser;
+import com.pabloinsdrums.apigestion.dto.auth.AuthenticationRequest;
+import com.pabloinsdrums.apigestion.dto.auth.AuthenticationResponse;
+import com.pabloinsdrums.apigestion.dto.user.RegisteredUser;
+import com.pabloinsdrums.apigestion.dto.user.SaveUser;
 import com.pabloinsdrums.apigestion.model.entity.User;
 import com.pabloinsdrums.apigestion.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -18,6 +24,9 @@ public class AuthenticationService {
 
     @Autowired
     private JwtService jwtService;
+
+    @Autowired
+    private AuthenticationManager authenticationManager;
 
     public RegisteredUser registerOneCustomer(SaveUser newUser) {
         User user = userService.registerOneCustomer(newUser);
@@ -41,5 +50,31 @@ public class AuthenticationService {
         extraClaims.put("authorities",user.getAuthorities());
 
         return extraClaims;
+    }
+
+    public AuthenticationResponse login(AuthenticationRequest authRequest) {
+        Authentication authentication = new UsernamePasswordAuthenticationToken(
+                authRequest.getUsername(), authRequest.getPassword()
+        );
+
+        authenticationManager.authenticate(authentication);
+
+        User user = userService.findOneByUsername(authRequest.getUsername()).get();
+        String jwt = jwtService.generateToken(user, generateExtraClaims(user));
+
+        AuthenticationResponse authRsp = new AuthenticationResponse();
+        authRsp.setJwt(jwt);
+
+        return authRsp;
+    }
+
+    public boolean validateToken(String jwt) {
+        try {
+            jwtService.extractUsername(jwt);
+            return true;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
     }
 }

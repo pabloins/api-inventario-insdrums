@@ -27,7 +27,8 @@ public class HttpSecurityConfig {
                     .authenticationProvider(daoAuthProvider)
                     .authorizeHttpRequests( authReqConfig -> {
                         authReqConfig.requestMatchers(HttpMethod.POST,"/customers").permitAll();
-                        authReqConfig.requestMatchers(HttpMethod.POST,"/auth/**").permitAll();
+                        authReqConfig.requestMatchers(HttpMethod.POST,"/auth/authenticate").permitAll();
+                        authReqConfig.requestMatchers(HttpMethod.GET,"/auth/validate-token").permitAll();
 
                         authReqConfig.anyRequest().authenticated();
                     } )

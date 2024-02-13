@@ -1,7 +1,7 @@
 package com.pabloinsdrums.apigestion.controller;
 
-import com.pabloinsdrums.apigestion.dto.RegisteredUser;
-import com.pabloinsdrums.apigestion.dto.SaveUser;
+import com.pabloinsdrums.apigestion.dto.user.RegisteredUser;
+import com.pabloinsdrums.apigestion.dto.user.SaveUser;
 import com.pabloinsdrums.apigestion.service.auth.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

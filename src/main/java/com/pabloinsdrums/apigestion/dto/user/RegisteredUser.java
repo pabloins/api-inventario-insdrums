@@ -1,4 +1,4 @@
-package com.pabloinsdrums.apigestion.dto;
+package com.pabloinsdrums.apigestion.dto.user;
 
 import lombok.Data;
 

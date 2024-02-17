@@ -2,6 +2,7 @@ package com.pabloinsdrums.apigestion.controller;
 
 import com.pabloinsdrums.apigestion.dto.auth.AuthenticationRequest;
 import com.pabloinsdrums.apigestion.dto.auth.AuthenticationResponse;
+import com.pabloinsdrums.apigestion.model.entity.User;
 import com.pabloinsdrums.apigestion.service.auth.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -27,5 +28,11 @@ public class AuthenticationController {
             @RequestBody @Valid AuthenticationRequest authenticationRequest) {
         AuthenticationResponse rsp = authenticationService.login(authenticationRequest);
         return ResponseEntity.ok(rsp);
+    }
+
+    @GetMapping("/profile")
+    public ResponseEntity<User> findMyProfile () {
+        User user = authenticationService.findLoggedInUser();
+        return ResponseEntity.ok(user);
     }
 }

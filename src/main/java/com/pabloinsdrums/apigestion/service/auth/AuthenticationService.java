@@ -4,12 +4,14 @@ import com.pabloinsdrums.apigestion.dto.auth.AuthenticationRequest;
 import com.pabloinsdrums.apigestion.dto.auth.AuthenticationResponse;
 import com.pabloinsdrums.apigestion.dto.user.RegisteredUser;
 import com.pabloinsdrums.apigestion.dto.user.SaveUser;
+import com.pabloinsdrums.apigestion.exception.ObjectNotFoundException;
 import com.pabloinsdrums.apigestion.model.entity.User;
 import com.pabloinsdrums.apigestion.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -76,5 +78,15 @@ public class AuthenticationService {
             System.out.println(e.getMessage());
             return false;
         }
+    }
+
+    public User findLoggedInUser() {
+        UsernamePasswordAuthenticationToken auth =
+                (UsernamePasswordAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
+
+        String username = (String) auth.getPrincipal();
+
+        return userService.findOneByUsername(username)
+                .orElseThrow(() -> new ObjectNotFoundException("User not found. Username: " + username));
     }
 }

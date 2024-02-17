@@ -15,12 +15,14 @@ public enum Role {
         RolePermission.CREATE_ONE_PRODUCT,
         RolePermission.UPDATE_ONE_PRODUCT,
         RolePermission.DISABLE_ONE_PRODUCT,
+        RolePermission.DELETE_ONE_PRODUCT,
 
         RolePermission.READ_ALL_CATEGORIES,
         RolePermission.READ_ONE_CATEGORY,
         RolePermission.CREATE_ONE_CATEGORY,
         RolePermission.UPDATE_ONE_CATEGORY,
         RolePermission.DISABLE_ONE_CATEGORY,
+        RolePermission.DELETE_ONE_CATEGORY,
 
         RolePermission.READ_MY_PROFILE
     )),

@@ -56,4 +56,10 @@ public class ProductController {
         Product product = productservice.disabledOneById(productId);
         return ResponseEntity.ok(product);
     }
+
+//    @DeleteMapping("/{productId}")
+//    public ResponseEntity<String> deleteOneById(@PathVariable Long productId) {
+//        Optional<Product> product = productservice.deleteOneById(productId);
+//        return ResponseEntity.ok("product successfully removed");
+//    }
 }

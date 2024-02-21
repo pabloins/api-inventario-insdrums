@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -31,6 +32,7 @@ public class ProductController {
         return ResponseEntity.notFound().build();
     }
 
+    @PreAuthorize("hasAuthority('READ_ONE_PRODUCT')")
     @GetMapping("/{productId}")
     public ResponseEntity<Product> findOneById(@PathVariable Long productId) {
         Optional<Product> product = productservice.findOneById(productId);
@@ -38,12 +40,14 @@ public class ProductController {
 
     }
 
+    @PreAuthorize("hasAuthority('CREATE_ONE_PRODUCT')")
     @PostMapping
     public ResponseEntity<Product> createOne(@RequestBody @Valid SaveProductDto saveProductDto) {
         Product product = productservice.createOne(saveProductDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(product);
     }
 
+    @PreAuthorize("hasAuthority('UPDATE_ONE_PRODUCT')")
     @PutMapping("/{productId}")
     public ResponseEntity<Product> updateOneById(@PathVariable Long productId,
                                                  @RequestBody @Valid SaveProductDto saveProductDto) {
@@ -51,6 +55,7 @@ public class ProductController {
         return ResponseEntity.status(HttpStatus.OK).body(product);
     }
 
+    @PreAuthorize("hasAuthority('DISABLE_ONE_PRODUCT')")
     @PutMapping("/{productId}/disabled")
     public ResponseEntity<Product> disableOneById(@PathVariable Long productId) {
         Product product = productservice.disabledOneById(productId);

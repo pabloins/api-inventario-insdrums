@@ -9,7 +9,7 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 public enum Role {
-    ROLE_ADMINISTRATOR(Arrays.asList(
+    ADMINISTRATOR(Arrays.asList(
         RolePermission.READ_ALL_PRODUCTS,
         RolePermission.READ_ONE_PRODUCT,
         RolePermission.CREATE_ONE_PRODUCT,
@@ -26,7 +26,7 @@ public enum Role {
 
         RolePermission.READ_MY_PROFILE
     )),
-    ROLE_ASSISTANT_ADMINISTRADOR(Arrays.asList(
+    ASSISTANT_ADMINISTRATOR(Arrays.asList(
         RolePermission.READ_ALL_PRODUCTS,
         RolePermission.READ_ONE_PRODUCT,
         RolePermission.UPDATE_ONE_PRODUCT,
@@ -37,7 +37,7 @@ public enum Role {
 
         RolePermission.READ_MY_PROFILE
     )),
-    ROLE_COSTUMER(List.of(
+    CUSTOMER(List.of(
         RolePermission.READ_MY_PROFILE
     ));
 

@@ -7,6 +7,7 @@ import com.pabloinsdrums.apigestion.model.util.Role;
 import com.pabloinsdrums.apigestion.repository.UserRepository;
 import com.pabloinsdrums.apigestion.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -30,7 +31,7 @@ public class UserServiceImpl implements UserService {
         user.setUsername(newUser.getUsername());
         user.setName(newUser.getName());
         user.setPassword(passwordEncoder.encode(newUser.getPassword()));
-        user.setRole(Role.ROLE_COSTUMER);
+        user.setRole(Role.CUSTOMER);
 
         return userRepository.save(user);
     }

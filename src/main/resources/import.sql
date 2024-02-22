@@ -1,10 +1,8 @@
--- CREACIÓN DE MODULOS
 INSERT INTO module (name, base_path) VALUES ('PRODUCT', '/products');
 INSERT INTO module (name, base_path) VALUES ('CATEGORY', '/categories');
 INSERT INTO module (name, base_path) VALUES ('CUSTOMER', '/customers');
 INSERT INTO module (name, base_path) VALUES ('AUTH', '/auth');
 
--- CREACIÓN DE OPERACIONES
 INSERT INTO operation (name, path, http_method, permit_all, module_id) VALUES ('READ_ALL_PRODUCTS','', 'GET', false, 1);
 INSERT INTO operation (name, path, http_method, permit_all, module_id) VALUES ('READ_ONE_PRODUCT','/[0-9]*', 'GET', false, 1);
 INSERT INTO operation (name, path, http_method, permit_all, module_id) VALUES ('CREATE_ONE_PRODUCT','', 'POST', false, 1);
@@ -52,18 +50,15 @@ INSERT INTO granted_permission (role_id, operation_id) VALUES (3, 9);
 INSERT INTO granted_permission (role_id, operation_id) VALUES (3, 10);
 INSERT INTO granted_permission (role_id, operation_id) VALUES (3, 15);
 
--- CREACIÓN DE USUARIOS
 INSERT INTO "user" (username, name, password, role_id) VALUES ('lmarquez', 'luis márquez', '$2a$10$ywh1O2EwghHmFIMGeHgsx.9lMw5IXpg4jafeFS.Oi6nFv0181gHli', 1);
 INSERT INTO "user" (username, name, password, role_id) VALUES ('fperez', 'fulano pérez', '$2a$10$V29z7/qC9wpHfzRMxGOHye5RMAxCid2/MzJalk0dsiA3zZ9CJfub.', 2);
 INSERT INTO "user" (username, name, password, role_id) VALUES ('mhernandez', 'mengano hernández', '$2a$10$TMbMuEZ8utU5iq8MOoxpmOc6QWQuYuwgx1xJF8lSMNkKP3hIrwYFG', 3);
 
--- CREACIÓN DE CATEGORIAS
 INSERT INTO category (name, status) VALUES ('Electrónica', 'ENABLED');
 INSERT INTO category (name, status) VALUES ('Ropa', 'ENABLED');
 INSERT INTO category (name, status) VALUES ('Deportes', 'ENABLED');
 INSERT INTO category (name, status) VALUES ('Hogar', 'ENABLED');
 
--- CREACIÓN DE PRODUCTOS
 INSERT INTO product (name, price, status, category_id) VALUES ('Smartphone', 500.00, 'ENABLED', 1);
 INSERT INTO product (name, price, status, category_id) VALUES ('Auriculares Bluetooth', 50.00, 'DISABLED', 1);
 INSERT INTO product (name, price, status, category_id) VALUES ('Tablet', 300.00, 'ENABLED', 1);

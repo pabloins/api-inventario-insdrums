@@ -8,12 +8,14 @@ import org.springframework.security.authorization.AuthorizationDecision;
 import org.springframework.security.authorization.AuthorizationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.access.intercept.RequestAuthorizationContext;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.function.Supplier;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+@Component
 public class CustomAuthorizationManager implements AuthorizationManager<RequestAuthorizationContext> {
 
     @Autowired

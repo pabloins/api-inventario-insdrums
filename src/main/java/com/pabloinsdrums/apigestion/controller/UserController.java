@@ -1,6 +1,6 @@
 package com.pabloinsdrums.apigestion.controller;
 
-import com.pabloinsdrums.apigestion.model.entity.User;
+import com.pabloinsdrums.apigestion.model.entity.security.User;
 import com.pabloinsdrums.apigestion.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

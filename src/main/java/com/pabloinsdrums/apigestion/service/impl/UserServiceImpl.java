@@ -2,12 +2,13 @@ package com.pabloinsdrums.apigestion.service.impl;
 
 import com.pabloinsdrums.apigestion.dto.user.SaveUser;
 import com.pabloinsdrums.apigestion.exception.InvalidPasswordException;
-import com.pabloinsdrums.apigestion.model.entity.User;
-import com.pabloinsdrums.apigestion.model.util.Role;
-import com.pabloinsdrums.apigestion.repository.UserRepository;
+import com.pabloinsdrums.apigestion.exception.ObjectNotFoundException;
+import com.pabloinsdrums.apigestion.model.entity.security.Role;
+import com.pabloinsdrums.apigestion.model.entity.security.User;
+import com.pabloinsdrums.apigestion.repository.security.UserRepository;
+import com.pabloinsdrums.apigestion.service.RoleService;
 import com.pabloinsdrums.apigestion.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -23,6 +24,9 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private RoleService roleService;
+
     @Override
     public User registerOneCustomer(SaveUser newUser) {
         validatePassword(newUser);
@@ -31,7 +35,10 @@ public class UserServiceImpl implements UserService {
         user.setUsername(newUser.getUsername());
         user.setName(newUser.getName());
         user.setPassword(passwordEncoder.encode(newUser.getPassword()));
-        user.setRole(Role.CUSTOMER);
+
+        Role defaultRole = roleService.findDefaultRole()
+                .orElseThrow(() -> new ObjectNotFoundException("Role not found. Default Role"));
+        user.setRole(defaultRole);
 
         return userRepository.save(user);
     }

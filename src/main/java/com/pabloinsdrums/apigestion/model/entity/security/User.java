@@ -1,6 +1,5 @@
-package com.pabloinsdrums.apigestion.model.entity;
+package com.pabloinsdrums.apigestion.model.entity.security;
 
-import com.pabloinsdrums.apigestion.model.util.Role;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
@@ -27,7 +26,8 @@ public class User implements UserDetails {
 
     private String password;
 
-    @Enumerated(EnumType.STRING)
+    @ManyToOne
+    @JoinColumn(name = "role_id")
     private Role role;
 
     @Override
@@ -37,11 +37,11 @@ public class User implements UserDetails {
         if(role.getPermissions() == null) return null;
 
         List<SimpleGrantedAuthority> authorities = role.getPermissions().stream()
-                .map(Enum::name)
+                .map(each -> each.getOperation().getName())
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toList());
 
-        authorities.add(new SimpleGrantedAuthority("ROLE_" + this.role.name()));
+        authorities.add(new SimpleGrantedAuthority("ROLE_" + this.role.getName()));
         return authorities;
     }
 

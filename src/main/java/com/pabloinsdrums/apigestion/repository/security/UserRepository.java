@@ -1,6 +1,6 @@
-package com.pabloinsdrums.apigestion.repository;
+package com.pabloinsdrums.apigestion.repository.security;
 
-import com.pabloinsdrums.apigestion.model.entity.User;
+import com.pabloinsdrums.apigestion.model.entity.security.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

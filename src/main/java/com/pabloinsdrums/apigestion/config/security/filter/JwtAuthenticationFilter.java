@@ -1,7 +1,7 @@
 package com.pabloinsdrums.apigestion.config.security.filter;
 
 import com.pabloinsdrums.apigestion.exception.ObjectNotFoundException;
-import com.pabloinsdrums.apigestion.model.entity.User;
+import com.pabloinsdrums.apigestion.model.entity.security.User;
 import com.pabloinsdrums.apigestion.service.UserService;
 import com.pabloinsdrums.apigestion.service.auth.JwtService;
 import jakarta.servlet.FilterChain;
@@ -11,8 +11,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;

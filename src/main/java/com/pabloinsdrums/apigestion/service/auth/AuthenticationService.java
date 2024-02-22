@@ -5,14 +5,13 @@ import com.pabloinsdrums.apigestion.dto.auth.AuthenticationResponse;
 import com.pabloinsdrums.apigestion.dto.user.RegisteredUser;
 import com.pabloinsdrums.apigestion.dto.user.SaveUser;
 import com.pabloinsdrums.apigestion.exception.ObjectNotFoundException;
-import com.pabloinsdrums.apigestion.model.entity.User;
+import com.pabloinsdrums.apigestion.model.entity.security.User;
 import com.pabloinsdrums.apigestion.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -37,7 +36,7 @@ public class AuthenticationService {
         userDto.setId(user.getId());
         userDto.setName(user.getName());
         userDto.setUsername(user.getName());
-        userDto.setRole(user.getRole().name());
+        userDto.setRole(user.getRole().getName());
 
         String jwt = jwtService.generateToken(user, generateExtraClaims(user));
         userDto.setJwt(jwt);
@@ -48,7 +47,7 @@ public class AuthenticationService {
     private Map<String, Object> generateExtraClaims(User user) {
         Map<String, Object> extraClaims = new HashMap<>();
         extraClaims.put("name",user.getName());
-        extraClaims.put("role",user.getRole().name());
+        extraClaims.put("role",user.getRole().getName());
         extraClaims.put("authorities",user.getAuthorities());
 
         return extraClaims;

@@ -1,7 +1,7 @@
 package com.pabloinsdrums.apigestion.config.security;
 
 import com.pabloinsdrums.apigestion.exception.ObjectNotFoundException;
-import com.pabloinsdrums.apigestion.repository.UserRepository;
+import com.pabloinsdrums.apigestion.repository.security.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

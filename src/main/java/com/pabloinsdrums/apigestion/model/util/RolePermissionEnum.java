@@ -1,6 +1,6 @@
 package com.pabloinsdrums.apigestion.model.util;
 
-public enum RolePermission {
+public enum RolePermissionEnum {
     READ_ALL_PRODUCTS,
     READ_ONE_PRODUCT,
     CREATE_ONE_PRODUCT,

@@ -1,7 +1,7 @@
 package com.pabloinsdrums.apigestion.service;
 
 import com.pabloinsdrums.apigestion.dto.user.SaveUser;
-import com.pabloinsdrums.apigestion.model.entity.User;
+import com.pabloinsdrums.apigestion.model.entity.security.User;
 
 import java.util.Optional;
 

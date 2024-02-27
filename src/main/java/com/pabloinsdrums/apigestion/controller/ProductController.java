@@ -19,11 +19,11 @@ import java.util.Optional;
 public class ProductController {
 
     @Autowired
-    private ProductService productservice;
+    private ProductService productService;
 
     @GetMapping
     public ResponseEntity<Page<Product>> findAll(Pageable pageable) {
-        Page<Product> productPage = productservice.findAll(pageable);
+        Page<Product> productPage = productService.findAll(pageable);
 
         if(productPage.hasContent()) {
             return ResponseEntity.ok(productPage);
@@ -35,7 +35,7 @@ public class ProductController {
     @PreAuthorize("hasAuthority('READ_ONE_PRODUCT')")
     @GetMapping("/{productId}")
     public ResponseEntity<Product> findOneById(@PathVariable Long productId) {
-        Optional<Product> product = productservice.findOneById(productId);
+        Optional<Product> product = productService.findOneById(productId);
         return product.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
 
     }
@@ -43,7 +43,7 @@ public class ProductController {
     @PreAuthorize("hasAuthority('CREATE_ONE_PRODUCT')")
     @PostMapping
     public ResponseEntity<Product> createOne(@RequestBody @Valid SaveProductDto saveProductDto) {
-        Product product = productservice.createOne(saveProductDto);
+        Product product = productService.createOne(saveProductDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(product);
     }
 
@@ -51,20 +51,21 @@ public class ProductController {
     @PutMapping("/{productId}")
     public ResponseEntity<Product> updateOneById(@PathVariable Long productId,
                                                  @RequestBody @Valid SaveProductDto saveProductDto) {
-        Product product = productservice.updateOneById(productId, saveProductDto);
+        Product product = productService.updateOneById(productId, saveProductDto);
         return ResponseEntity.status(HttpStatus.OK).body(product);
     }
 
     @PreAuthorize("hasAuthority('DISABLE_ONE_PRODUCT')")
     @PutMapping("/{productId}/disabled")
     public ResponseEntity<Product> disableOneById(@PathVariable Long productId) {
-        Product product = productservice.disabledOneById(productId);
+        Product product = productService.disabledOneById(productId);
         return ResponseEntity.ok(product);
     }
 
-//    @DeleteMapping("/{productId}")
-//    public ResponseEntity<String> deleteOneById(@PathVariable Long productId) {
-//        Optional<Product> product = productservice.deleteOneById(productId);
-//        return ResponseEntity.ok("product successfully removed");
-//    }
+    @PreAuthorize("hasAuthority('DELETE_ONE_PRODUCT')")
+    @DeleteMapping("/{productId}")
+    public ResponseEntity<Product> deleteOneById(@PathVariable Long productId) {
+        Product product = productService.deleteOneById(productId);
+        return ResponseEntity.ok(product);
+    }
 }

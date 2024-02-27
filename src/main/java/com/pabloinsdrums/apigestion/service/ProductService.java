@@ -18,4 +18,6 @@ public interface ProductService {
     Product updateOneById(Long productId, SaveProductDto saveProductDto);
 
     Product disabledOneById(Long productId);
+
+    Product deleteOneById(Long productId);
 }

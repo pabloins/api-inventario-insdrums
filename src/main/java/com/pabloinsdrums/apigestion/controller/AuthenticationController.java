@@ -2,8 +2,10 @@ package com.pabloinsdrums.apigestion.controller;
 
 import com.pabloinsdrums.apigestion.dto.auth.AuthenticationRequest;
 import com.pabloinsdrums.apigestion.dto.auth.AuthenticationResponse;
+import com.pabloinsdrums.apigestion.dto.auth.LogoutResponse;
 import com.pabloinsdrums.apigestion.model.entity.security.User;
 import com.pabloinsdrums.apigestion.service.auth.AuthenticationService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -33,11 +35,11 @@ public class AuthenticationController {
         return ResponseEntity.ok(rsp);
     }
 
-//    @PostMapping("/logout")
-//    public ResponseEntity<LogoutResponse> logout(HttpServletRequest request) {
-//        authenticationService.logout(request);
-//        return ResponseEntity.ok(new LogoutResponse("successful logout"));
-//    }
+    @PostMapping("/logout")
+    public ResponseEntity<LogoutResponse> logout(HttpServletRequest request) {
+        authenticationService.logout(request);
+        return ResponseEntity.ok(new LogoutResponse("Successful logout"));
+    }
 
     @PreAuthorize("hasAuthority('READ_MY_PROFILE')")
     @GetMapping("/profile")

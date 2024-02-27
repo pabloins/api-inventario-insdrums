@@ -13,13 +13,14 @@ public class ApiGestionApplication {
 		SpringApplication.run(ApiGestionApplication.class, args);
 	}
 
-	@Bean
-	public CommandLineRunner createPasswordsCommand(PasswordEncoder passwordEncoder) {
-		return args -> {
-			System.out.println(passwordEncoder.encode("clave123"));
-			System.out.println(passwordEncoder.encode("clave456"));
-			System.out.println(passwordEncoder.encode("clave789"));
-		};
-	}
+	//Show function passwordEncoder
+//	@Bean
+//	public CommandLineRunner createPasswordsCommand(PasswordEncoder passwordEncoder) {
+//		return args -> {
+//			System.out.println(passwordEncoder.encode("clave123"));
+//			System.out.println(passwordEncoder.encode("clave456"));
+//			System.out.println(passwordEncoder.encode("clave789"));
+//		};
+//	}
 
 }

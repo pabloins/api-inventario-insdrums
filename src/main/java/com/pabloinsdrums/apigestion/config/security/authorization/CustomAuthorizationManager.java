@@ -14,9 +14,12 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.authorization.AuthorizationDecision;
 import org.springframework.security.authorization.AuthorizationManager;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.security.web.access.intercept.RequestAuthorizationContext;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
@@ -51,7 +54,7 @@ public class CustomAuthorizationManager implements AuthorizationManager<RequestA
     }
 
     private boolean isGranted(String url, String httpMethod, Authentication authentication) {
-        if(!(authentication instanceof UsernamePasswordAuthenticationToken)) {
+        if(!(authentication instanceof JwtAuthenticationToken)) {
             throw new AuthenticationCredentialsNotFoundException("User not logged in");
         }
 
@@ -72,13 +75,39 @@ public class CustomAuthorizationManager implements AuthorizationManager<RequestA
     }
 
     private List<Operation> obtainOperations(Authentication authentication) {
-        UsernamePasswordAuthenticationToken authToken = (UsernamePasswordAuthenticationToken) authentication;
-        String username = (String) authToken.getPrincipal();
+        JwtAuthenticationToken authToken = (JwtAuthenticationToken) authentication;
+
+        Jwt jwt = authToken.getToken();
+        String username = jwt.getSubject();
+
         User user = userService.findOneByUsername(username)
                 .orElseThrow(() -> new ObjectNotFoundException("User not found. Username: " + username));
-        return user.getRole().getPermissions().stream()
+        List<Operation> operations = user.getRole().getPermissions().stream()
                 .map(GrantedPermission::getOperation)
                 .collect(Collectors.toList());
+
+        List<String> scopes = extractScopes(jwt);
+
+        if(!scopes.contains("ALL")){
+            operations.stream()
+                    .filter(operation -> scopes.contains(operation.getName()))
+                    .collect(Collectors.toList());
+        }
+
+        return operations;
+    }
+
+    private List<String> extractScopes(Jwt jwt) {
+        List<String> scopes = new ArrayList<>();
+
+        try {
+            scopes = (List<String>) jwt.getClaims().get("scope");
+        }catch (Exception e){
+            System.out.println("problema al extraer scopes de cliente");
+            throw new RuntimeException("Error in extractScopes "+e);
+        }
+
+        return scopes;
     }
 
     private boolean isPublic(String url, String httpMethod){
